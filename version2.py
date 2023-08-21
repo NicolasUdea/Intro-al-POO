@@ -26,55 +26,56 @@ class Paciente:
 
 class Sistema:
     def __init__(self):
-      self.__lista_pacientes = []
-    #   self.__lista_pacientes = {}
-      self.__numero_pacientes = len(self.__lista_pacientes)
-      
-    def ingresarPaciente(self):
-        # 1- solicito los datos por teclado
-        nombre = input("Ingrese el nombre: ")
-        cedula = int(input("Ingrese la cedula: "))    
-        genero = input("Ingrese el genero: ")
-        servicio = input("Ingrese el servicio: ")
-        # 2- creo el objeto Paciente y le asigno los datos
-        p = Paciente()
-        p.asignarNombre(nombre)
-        p.asignarCedula(cedula)
-        p.asignarGenero(genero)
-        p.asignarServicio(servicio)        
-        # 3- guardo el Paciente en  la lista        
-        self.__lista_pacientes.append(p)
-        # self.__lista_pacientes[p.verCedula()] = p
-        # 4- actualizo la cantidad de pacientes en el sistema
-        self.__numero_pacientes = len(self.__lista_pacientes)
-
+      self.__lista_pacientes = []     
+    def ingresarPaciente(self, pac):
+        self.__lista_pacientes.append(pac)
+    def verDatosPacientes(self, c):
+        # Se busca paciente por paciente
+        for p in self.__lista_pacientes:
+            if c == p.verCedula():
+                print("Nombre: " + p.verNombre())
+                print("Genero: " + p.verGenero())
+                print("Servicio: " + p.verServicio())
+                break
     def verNumeroPacientes(self):
-        return self.__numero_pacientes
-    
-    def verDatosPaciente(self):
-        cedula = lf.intChecker("Ingrese la cedula a buscar: ")
-        
-        for paciente in self.__lista_pacientes:
-            if cedula == paciente.verCedula():
-                print("Nombre: " + paciente.verNombre())
-                print("Cedula: " + str(paciente.verCedula()))
-                print("Genero: " + paciente.verGenero())
-                print("Servicio: " + paciente.verServicio())
-                
-mi_sistema = Sistema()
-print(lf.logo1)
-print("Bienvenido al sistema de registro de pacientes\n")
-while True:
-    opcion = lf.intChecker(" - 1. Nuevo paciente\n - 2. Numero de paciente\n - 3. Datos paciente\n - 4. Salir  \n")
-    if opcion == 1:
-        mi_sistema.ingresarPaciente()
-    elif opcion == 2:
-        print("Ahora hay: " + str(mi_sistema.verNumeroPacientes()))
-    elif opcion == 3:
-        mi_sistema.verDatosPaciente()
-    elif opcion == 4:
-        print("Gracias por usar el sistema")
-        print(lf.logo2)
-        break
-    else:
-        print("Opcion invalida")
+        print("En el sistema hay " + str(len(self.__lista_pacientes)) + " pacientes")              
+def main():
+    mi_sistema = Sistema()
+    print(lf.logo1)
+    print("Bienvenido al sistema de registro de pacientes\n")
+    while True:
+        opcion = lf.intChecker(" - 1. Ingresar paciente\n - 2. Buscar paciente\n - 3. Ver número de pacientes ingresados\n - 4. Salir  \n")
+        if opcion == 1:
+            print("Ingrese los datos del paciente\n")
+            nombre = input("Nombre: ")
+            cedula = lf.intChecker("Cedula: ")
+            genero = input("Genero: ")
+            servicio = input("Servicio: ")
+            pac = Paciente()
+            pac.asignarNombre(nombre)
+            pac.asignarCedula(cedula)
+            pac.asignarGenero(genero)
+            pac.asignarServicio(servicio)
+            sis.ingresarPaciente(pac)
+        elif opcion == 2:
+            c = lf.intChecker("Ingrese la cedula del paciente: ")
+            if mi_sistema.verDatosPacientes(c) == None:
+                print("No se encontró el paciente")
+            else:
+                p = sis.verDatosPacientes(c)
+                print(f"Datos del paciente con cedula {c}:\n")
+                print("Nombre: " + p.verNombre())
+                print("Genero: " + p.verGenero())
+                print("Servicio: " + p.verServicio())
+        elif opcion == 3:
+            mi_sistema.verNumeroPacientes()
+            print()
+        elif opcion == 4:
+            print("Gracias por usar el sistema")
+            print(lf.logo2)
+            break
+        else:
+            print("Opcion invalida\n")
+            
+if __name__ == "__main__":
+    main()
