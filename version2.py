@@ -1,3 +1,4 @@
+import logo_funciones as lf
 class Paciente:
     def __init__(self):
       self.__nombre = ""
@@ -51,7 +52,7 @@ class Sistema:
         return self.__numero_pacientes
     
     def verDatosPaciente(self):
-        cedula = int(input("Ingrese la cedula a buscar: "))
+        cedula = lf.intChecker("Ingrese la cedula a buscar: ")
         
         for paciente in self.__lista_pacientes:
             if cedula == paciente.verCedula():
@@ -61,9 +62,10 @@ class Sistema:
                 print("Servicio: " + paciente.verServicio())
                 
 mi_sistema = Sistema()
-
+print(lf.logo1)
+print("Bienvenido al sistema de registro de pacientes\n")
 while True:
-    opcion = int(input("1. Nuevo paciente\n - 2. Numero de paciente\n - 3. Datos paciente\n - 4. Salir:  \n"))
+    opcion = lf.intChecker(" - 1. Nuevo paciente\n - 2. Numero de paciente\n - 3. Datos paciente\n - 4. Salir  \n")
     if opcion == 1:
         mi_sistema.ingresarPaciente()
     elif opcion == 2:
@@ -71,6 +73,8 @@ while True:
     elif opcion == 3:
         mi_sistema.verDatosPaciente()
     elif opcion == 4:
+        print("Gracias por usar el sistema")
+        print(lf.logo2)
         break
     else:
         print("Opcion invalida")
